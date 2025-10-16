@@ -5,3 +5,4 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'priority', 'deadline']
+    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))

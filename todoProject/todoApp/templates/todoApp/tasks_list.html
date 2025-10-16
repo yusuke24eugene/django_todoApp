@@ -3,37 +3,58 @@
 {% block title %} Task List {% endblock %}
 
 {% block content %}
-    <h1>Task List</h1>
+    <div class="list-container">
+        <h1>Task List</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Priority</th>
-                <th>Deadline</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ task.title }}</td>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.get_priority_display }}</td>
-                    <td>{% if task.deadline %}{{ task.deadline }}{% else %}No Deadline{% endif %}</td>
-                    <td>
-                            <a href="{% url 'update_task' task.id %}">Update</a>
-                            <a href="{% url 'delete_task' task.id %}">Delete</a>
-                    </td>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">No tasks available.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for task in page_obj %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.get_priority_display }}</td>
+                        <td>{% if task.deadline %}{{ task.deadline }}{% else %}No Deadline{% endif %}</td>
+                        <td>
+                                <a href="{% url 'update_task' task.id %}">Update</a>
+                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="no-tasks">No tasks available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{% url 'create_task' %}">Create a New Task</a>
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        <a href="{% url 'create_task' %}" class="create-task-btn">Create a New Task</a>
+    </div>
 {% endblock %}

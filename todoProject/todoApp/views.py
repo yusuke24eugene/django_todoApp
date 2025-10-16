@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TaskForm
 from .models import Task
+from django.core.paginator import Paginator
 
 # Create your views here.
 def task_list(request):
-    tasks = Task.objects.all()
-    return render(request, 'todoApp/tasks_list.html', {'tasks': tasks})
+    tasks = Task.objects.all().order_by('deadline', 'priority')
+
+    # Set up pagination
+    paginator = Paginator(tasks, 10)  # 10 tasks per page
+    page_number = request.GET.get('page')  # Get the current page number from the URL parameters
+    page_obj = paginator.get_page(page_number)  # Get the Page object for the current page
+
+    return render(request, 'todoApp/tasks_list.html', {'page_obj': page_obj})
 
 def create_task(request):
     if request.method == 'POST':
