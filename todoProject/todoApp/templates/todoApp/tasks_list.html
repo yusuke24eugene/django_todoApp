@@ -21,11 +21,13 @@
                     <tr>
                         <td>{{ task.title }}</td>
                         <td>{{ task.description }}</td>
-                        <td>{{ task.get_priority_display }}</td>
+                        <td class="{% if task.get_priority_display == 'High' %}high-priority{% elif task.get_priority_display == 'Medium' %}medium-priority{% elif task.get_priority_display == 'Low' %}low-priority{% endif %}">
+                            {{ task.get_priority_display }}
+                        </td>
                         <td>{% if task.deadline %}{{ task.deadline }}{% else %}No Deadline{% endif %}</td>
                         <td>
-                                <a href="{% url 'update_task' task.id %}">Update</a>
-                                <a href="{% url 'delete_task' task.id %}">Delete</a>
+                            <a href="{% url 'update_task' task.id %}" class="update-link">Update</a>
+                            <a href="{% url 'delete_task' task.id %}" class="delete-link">Delete</a>
                         </td>
                     </tr>
                 {% empty %}

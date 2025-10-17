@@ -102,13 +102,42 @@ tr:hover {
 
 td a {
     text-decoration: none;
-    color: #4CAF50;
     margin-right: 15px;
     font-weight: 500;
 }
 
-td a:hover {
-    color: #388e3c;
+.update-link {
+    color: #007BFF;
+}
+
+.update-link:hover {
+    color: #0056b3;
+}
+
+.delete-link {
+    color: #f44336;
+}
+
+.delete-link:hover {
+    color: #d32f2f;
+}
+
+/* High Priority - Red */
+.high-priority {
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* Medium Priority - Orange */
+.medium-priority {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+/* Low Priority - Green */
+.low-priority {
+    color: #4CAF50;
+    font-weight: bold;
 }
 
 .actions {
@@ -213,8 +242,8 @@ button:hover {
 
 /* delete confirmation styles */
 .task-info {
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: bold;
     color: #333;
     margin-bottom: 30px;
 }
